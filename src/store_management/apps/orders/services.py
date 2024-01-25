@@ -8,7 +8,7 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 
 load_dotenv()
 
-api_key = os.getenv('NOVA_POSHTA_API_KEY', 'your_api_key')
+api_key = os.getenv('NOVA_POSHTA_API_KEY', 'None')
 
 
 def get_nova_poshta_city_list():
