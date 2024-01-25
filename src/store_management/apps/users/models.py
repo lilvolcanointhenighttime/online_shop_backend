@@ -7,8 +7,8 @@ from rest_framework.authtoken.models import Token
 
 
 class User(AbstractBaseUser):
-    # groups = models.ManyToManyField('Group', related_name='custom_users')
-    # user_permissions = models.ManyToManyField('Permission', related_name='custom_users')
+    groups = models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')
+    user_permissions = models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions')
 
     username = models.CharField(max_length=250,
                                 verbose_name='Username',
