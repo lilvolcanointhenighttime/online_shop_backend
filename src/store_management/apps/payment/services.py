@@ -19,6 +19,7 @@ client = paypalrestsdk.configure(
 
 
 def get_paypal_access_token(client_id, client_secret):
+    print(client_id, client_secret)
     url = "https://api.sandbox.paypal.com/v1/oauth2/token"
     data = {
         "client_id": client_id,
@@ -31,12 +32,13 @@ def get_paypal_access_token(client_id, client_secret):
     }
 
     token = requests.post(url, data, headers=headers)
+    print(token.json())
     return token.json()['access_token']
 
-
-# access_token = get_paypal_access_token(os.getenv('PAYPAL_CLIENT_ID', 'your_client_id'),
-#                                        os.getenv('PAYPAL_CLIENT_SECRET', 'your_client_secret'))
-access_token = 'asd'
+# access_token to use paypal
+# access_token = get_paypal_access_token(os.environ['PAYPAL_CLIENT_ID'],
+#                                        os.environ['PAYPAL_CLIENT_SECRET'])
+access_token = "1"
 
 
 def paypal_create_order(value, order_id):
