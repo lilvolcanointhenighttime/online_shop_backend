@@ -36,7 +36,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'products_management',
+    'rest_framework.authtoken',
+    # local apps
+    'apps.basket',
+    'apps.categories',
+    'apps.coupons',
+    'apps.orders',
+    'apps.payment',
+    'apps.products',
+    'apps.stock',
+    'apps.users'
 ]
 
 MIDDLEWARE = [
@@ -71,9 +80,12 @@ ASGI_APPLICATION = 'config.asgi.application'
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+AUTH_USER_MODEL = 'users.User'
+
+LANGUAGE_CODE = os.getenv('LANGUAGE_CODE')
+
+TIME_ZONE = os.getenv('TIME_ZONE')
 
 USE_I18N = True
 
