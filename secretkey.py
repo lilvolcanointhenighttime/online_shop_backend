@@ -1,4 +1,5 @@
 from django.core.management.utils import get_random_secret_key
+# Generates secret_key and add it to .env
 with open('./.env', 'r') as dotenv:
     vars = dotenv.read()
 
