@@ -10,7 +10,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DJANGO_ENV = os.getenv("DJANGO_ENV")
 DEBUG = DJANGO_ENV != "PRODUCTION"
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
-print(SECRET_KEY)
 ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split(",")
 
 ROOT_URLCONF = 'config.urls'
@@ -37,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    # local apps (under construction)
+    'products_management',
 ]
 
 MIDDLEWARE = [
