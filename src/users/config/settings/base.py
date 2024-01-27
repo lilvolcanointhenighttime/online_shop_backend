@@ -10,6 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DJANGO_ENV = os.getenv("DJANGO_ENV")
 DEBUG = DJANGO_ENV != "PRODUCTION"
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+print(SECRET_KEY)
 ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split(",")
 
 ROOT_URLCONF = 'config.urls'
@@ -36,16 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
-    # local apps
-    'apps.basket',
-    'apps.categories',
-    'apps.coupons',
-    'apps.orders',
-    'apps.payment',
-    'apps.products',
-    'apps.stock',
-    'apps.users'
+    # local apps (under construction)
 ]
 
 MIDDLEWARE = [
@@ -80,12 +72,9 @@ ASGI_APPLICATION = 'config.asgi.application'
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
+LANGUAGE_CODE = 'en-us'
 
-AUTH_USER_MODEL = 'users.User'
-
-LANGUAGE_CODE = os.getenv('LANGUAGE_CODE')
-
-TIME_ZONE = os.getenv('TIME_ZONE')
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
