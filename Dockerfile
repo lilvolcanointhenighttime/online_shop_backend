@@ -12,8 +12,11 @@ COPY . .
 
 
 RUN pip install -r requirements.txt
+CMD python ./secretkey.py
 
 EXPOSE 8000
 
 WORKDIR /online_shop_backend/src/store_management
-CMD ./../../start.sh
+CMD python manage.py makemigrations
+CMD python manage.py migrate
+CMD python run_server.py
