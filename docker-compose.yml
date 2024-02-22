@@ -1,29 +1,24 @@
 version: '3'
 
-
 services:
   db:
     image: postgres:15
     container_name: online_shop_postgres
-    # restart: always
+    restart: always
     environment:
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-    ports:
-      - 5432:5432
-    networks:
-      - backend_network
+      - POSTGRES_NAME=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_HOST=${DB_HOST}
+      - POSTGRES_PORT=${DB_PORT}
+    expose:
+      - 5432
 
   django:
     container_name: django
     build:
       context: .
-    # restart: always
-    ports:
-      - '8000:8000'
+    restart: always
     volumes:
       - .:/backend_apps
     depends_on:
@@ -38,7 +33,6 @@ services:
       - DB_PORT=${DB_PORT}
     expose:
       - 8000
-    network_mode: host
 
   nginx:
     container_name: nginx
@@ -46,11 +40,9 @@ services:
     depends_on:
       - django
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
-      - .nginx/default.conf:/etc/nginx/conf.d
-    networks:
-      - backend_network
+      - .nginx/default.conf:/etc/nginx/nginx.conf:ro
 
   redis:
     container_name: redis
@@ -58,13 +50,11 @@ services:
     hostname: redis
     ports:
       - '6379:6379'
-    # restart: always
-    networks:
-      - backend_network
+    restart: always
 
   worker:
     container_name: celery_worker
-    # restart: always
+    restart: always
     build:
       context: .
     entrypoint: celery
@@ -77,12 +67,7 @@ services:
       - db
       - django
       - redis
-    networks:
-      - backend_network
 
 volumes:
   postgres_data:
 
-networks:
-  backend_network:
-    driver: bridge
