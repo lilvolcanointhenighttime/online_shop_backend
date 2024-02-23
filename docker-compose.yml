@@ -2,9 +2,9 @@ version: '3'
 
 services:
   db:
+    restart: always
     image: postgres:15
     container_name: online_shop_postgres
-    restart: always
     environment:
       - POSTGRES_NAME=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -15,10 +15,10 @@ services:
       - 5432
 
   django:
+    restart: always
     container_name: django
     build:
       context: .
-    restart: always
     volumes:
       - .:/backend_apps
     depends_on:
@@ -35,6 +35,7 @@ services:
       - 8000
 
   nginx:
+    restart: always
     container_name: nginx
     image: nginx
     depends_on:
@@ -45,22 +46,24 @@ services:
       - .nginx/default.conf:/etc/nginx/nginx.conf:ro
 
   redis:
+    restart: always
     container_name: redis
     image: redis:alpine
     hostname: redis
-    ports:
-      - '6379:6379'
-    restart: always
+    expose:
+      - 6379
 
   worker:
-    container_name: celery_worker
     restart: always
+    env_file:
+      - .env
+    container_name: celery_worker
     build:
       context: .
     entrypoint: celery
     command: -A config.settings.celery worker -l info
     volumes:
-      - .:/online_shop_backend/src/store_management/apps
+      - .:/backend_apps
     links:
       - redis
     depends_on:
