@@ -1,1 +1,1 @@
-![first_db_structure](https://github.com/lilvolcanointhenighttime/online_shop_backend/assets/125156127/ae4e7689-411a-4d4a-bfc8-bd7a60cea2ac)
+
